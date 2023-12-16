@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createContent, getContentData } from "../../Redux/content/action";
+import img from "../Contents/gff.jpg";
 
 //components
 import Navbar from "../../Components/Sidebar/Navbar";
@@ -12,6 +13,45 @@ import AddIcon from "../../Components/AddIcon/AddIcon";
 //css imports
 import { Button, Drawer, Space, Spin, message } from "antd";
 import "./Content.css";
+
+const courses = [
+  {
+    courseName: "Introduction to Computer Science",
+    courseCode: "CS101",
+    instructor: "Sujith Kumar B",
+    progress: 65,
+  },
+  {
+    courseName: "Database Management Systems",
+    courseCode: "CS201",
+    instructor: "Raviteja S",
+    progress: 50,
+  },
+  {
+    courseName: "Operating Systems",
+    courseCode: "CS301",
+    instructor: "G Sugam",
+    progress: 80,
+  },
+  {
+    courseName: "Computer Networks",
+    courseCode: "CS401",
+    instructor: "Ch Teja",
+    progress: 25,
+  },
+  {
+    courseName: "Software Engineering",
+    courseCode: "CS501",
+    instructor: "Pavan Kumar",
+    progress: 90,
+  }, 
+  {
+    courseName: "Automata Theory and Compiler Design",
+    courseCode: "CS696",
+    instructor: "Krishna Sureddi",
+    progress: 65,
+  }
+];
 
 const Content = () => {
   const dispatch = useDispatch();
@@ -134,93 +174,77 @@ const Content = () => {
   }, []);
 
   return (
-    <Navbar>
-      <div className="content">
-        {/* header component */}
-        <Header Title={"Contents"} Address={"Contents"} />
+    <>
+      <Navbar>
+        <div className="content">
+          {/* header component */}
+          <Header Title={"Contents"} Address={"Contents"} />
 
-        {/* content component */}
-        <div className="contentData">
-          {content?.map((data, i) => {
-            return <ContentBox data={data} key={i} />;
-          })}
-        </div>
-        {user?.userType !== "Student" ? (
-          <div onClick={showDrawer}>
-            <AddIcon />
+          {/* content component */}
+          <div className="contentData">
+            {courses.map((data, i) => {
+              return (
+                <div className="course-card" key={i} style={{cursor: "pointer"}}>
+                  <img
+                    className="course-image"
+                    src={img}
+                    alt="Course Image"
+                  />
+
+                  <div className="course-details">
+                    <div className="course-title">{data.courseName}</div>
+
+                    <div className="creator-name">
+                      Instructor: {data.instructor}
+                    </div>
+
+                    <div className="progress-bar">
+                      <div
+                        className="progress-bar-inner"
+                        style={{ width: `${data.progress}%` }}
+                      ></div>
+                    </div>
+
+                    <div className="progress-label">
+                      Progress: {data.progress}%
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-        ) : (
-          ""
-        )}
-
-        {/* create content drawer */}
-        <Drawer
-          title="Create a new account"
-          width={720}
-          onClose={onClose}
-          open={open}
-          bodyStyle={{ paddingBottom: 80 }}
-          extra={
-            <Space>
-              <Button onClick={onClose}>Cancel</Button>
-            </Space>
-          }
-        >
-          <form>
-            <input
-              placeholder="Title"
-              type="text"
-              name="title"
-              value={formData.title}
-              onChange={(e) => handleFormChange(e)}
-            />
-            <select name="class" onChange={(e) => handleFormChange(e)}>
-              <option value="">Choose Class</option>
-              <option value={5}>5</option>
-              <option value={6}>6</option>
-              <option value={7}>7</option>
-              <option value={8}>8</option>
-              <option value={9}>9</option>
-              <option value={10}>10</option>
-            </select>
-            <select name="subject" onChange={(e) => handleFormChange(e)}>
-              <option value="">Choose Subject</option>
-              <option value="Maths">Maths</option>
-              <option value="Physics">Physics</option>
-              <option value="Chemistry">Chemistry</option>
-              <option value="Biology">Biology</option>
-              <option value="Political science">Political science</option>
-              <option value="History">History</option>
-            </select>
-            <select name="type" onChange={(e) => handleFormChange(e)}>
-              <option value="">Choose Content Type</option>
-              <option value="Assignment">Assignment</option>
-              <option value="Project">Project</option>
-              <option value="Practice">Practice</option>
-            </select>
-          </form>
-          {size ? (
-            <div className="uploadedImgDiv">
-              <p>File Type : {fileType}</p>
-              <p>File Size : {size} mb</p>
-              <p>Thumbnail :</p>
-              <img src={thumbnailUrl} alt="thumbnail" />
+          {user?.userType !== "Student" ? (
+            <div onClick={showDrawer}>
+              <AddIcon />
             </div>
           ) : (
             ""
           )}
-          <button
-            className="uploadBtn"
-            onClick={() => WidgetRef.current.open()}
-          >
-            Upload File
-          </button>
-          <button className="submitBtn" onClick={handleSubmit}>
-            Add Content
-          </button>
 
-          {/* drawer loading indicator  */}
-          {loading ? (
+          {/* create content drawer */}
+          <Drawer>
+            {loading ? (
+              <Space
+                style={{
+                  width: "100vw",
+                  height: "100vh",
+                  position: "absolute",
+                  backgroundColor: "rgba(0,0,0,0.2)",
+                  top: "0",
+                  left: "0",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItem: "center",
+                }}
+              >
+                <Spin size="large"></Spin>
+              </Space>
+            ) : null}
+          </Drawer>
+
+          {/* main loading indicator  */}
+          {contextHolder}
+          {load ? (
             <Space
               style={{
                 width: "100vw",
@@ -237,29 +261,9 @@ const Content = () => {
               <Spin size="large"></Spin>
             </Space>
           ) : null}
-        </Drawer>
-
-        {/* main loading indicator  */}
-        {contextHolder}
-        {load ? (
-          <Space
-            style={{
-              width: "100vw",
-              height: "100vh",
-              position: "absolute",
-              backgroundColor: "rgba(0,0,0,0.2)",
-              top: "0",
-              left: "0",
-              display: "flex",
-              justifyContent: "center",
-              alignItem: "center",
-            }}
-          >
-            <Spin size="large"></Spin>
-          </Space>
-        ) : null}
-      </div>
-    </Navbar>
+        </div>
+      </Navbar>
+    </>
   );
 };
 

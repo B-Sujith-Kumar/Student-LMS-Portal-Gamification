@@ -148,7 +148,7 @@ router.get("/:studentId", async (req, res) => {
       if (student[i]._id.toString() === studentId.toString()) {
         console.log(student[i]);
         // You may want to send the found student as a response
-        res.json(student[i]);
+        return res.json(student[i]);
       }
     }
     // console.log("fuck you");
@@ -157,10 +157,6 @@ router.get("/:studentId", async (req, res) => {
   }
 });
 
-
-
-
-//delete student
 router.delete("/:studentId", async (req, res) => {
   const { studentId } = req.params;
   try {

@@ -79,6 +79,7 @@ const Navbar = ({ children }) => {
   //logout function
   const handleLogout = () => {
     dispatch(authLogout());
+    localStorage.removeItem("user");
   };
 
   return (

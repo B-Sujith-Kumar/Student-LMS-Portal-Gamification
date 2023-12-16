@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const router = express.Router();
 const nodemailer = require("nodemailer");
+const { ObjectId } = require('mongodb');
 
 //model import
 const { StudentModel } = require("../models/student.model");
@@ -88,22 +89,22 @@ router.post("/login", async (req, res) => {
         return res.send({ message: "Access Denied" });
       }
       // bcrypt.compare(password, student[0].password, (err, results) => {
-        // if (results) {
-          let token = jwt.sign(
-            { email, name: student[0].name },
-            process.env.secret_key,
-            { expiresIn: "7d" }
-          );
-          res.send({
-            message: "Login Successful",
-            user: student[0],
-            token,
-          });
-        } else {
-          res.status(201).send({ message: "Wrong credentials" });
-        }
-      // }
-      // );
+      // if (results) {
+      let token = jwt.sign(
+        { email, name: student[0].name, id: student[0]._id },
+        process.env.secret_key,
+        { expiresIn: "7d" }
+      );
+      res.send({
+        message: "Login Successful",
+        user: student[0],
+        token,
+      });
+    } else {
+      res.status(201).send({ message: "Wrong credentials" });
+    }
+    // }
+    // );
     // } else {
     //   res.send({ message: "Wrong credentials" });
     // }
@@ -130,6 +131,29 @@ router.patch("/:studentId", isAuthenticated, async (req, res) => {
   }
 });
 
+router.get("/:studentId", async (req, res) => {
+  const { studentId } = req.params;
+  console.log(studentId);
+  try {
+    const student = await StudentModel.find();
+    // res.json(student)
+    for (let i = 0; i < student.length; i++) {
+      console.log(student[i]._id.toString() === studentId.toString())
+      if (student[i]._id.toString() === studentId.toString()) {
+        console.log(student[i]);
+        // You may want to send the found student as a response
+        res.json(student[i]);
+      }
+    }
+    // console.log("fuck you");
+  } catch (error) {
+    res.status(500).send({ msg: "Internal Server Error" });
+  }
+});
+
+
+
+
 //delete student
 router.delete("/:studentId", async (req, res) => {
   const { studentId } = req.params;
@@ -140,5 +164,16 @@ router.delete("/:studentId", async (req, res) => {
     res.status(400).send({ msg: "Error" });
   }
 });
+
+router.post("/getDetails", async (req, res) => {
+  const id = req.body;
+  console.log(id);
+  try {
+    const studentDetails = StudentModel.findOne({ _id: id });
+    return res.send(studentDetails);
+  } catch (err) {
+    res.status(400).send({ msg: "Error" });
+  }
+})
 
 module.exports = router;

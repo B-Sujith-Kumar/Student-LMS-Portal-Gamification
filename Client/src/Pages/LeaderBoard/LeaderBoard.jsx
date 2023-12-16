@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getStudentData } from "../../Redux/student/action";
+import axios from "axios";
 
 //component imports
 import Navbar from "../../Components/Sidebar/Navbar";
@@ -14,6 +15,8 @@ import "./LeaderBoard.css";
 const LeaderBoard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [userDet, setUserDet] = useState(null);
+  const [count, setCount] = useState(0);
 
   //redux states
   const {
@@ -22,7 +25,19 @@ const LeaderBoard = () => {
   const { students } = useSelector((store) => store.student);
 
   useEffect(() => {
+    async function fetchData() {
+      try {
+        const user = localStorage.getItem("user");
+        const res = await axios.get(`http://localhost:4500/student/${user}`);
+        console.log(res);
+        setUserDet(res);
+        console.log(count);
+      } catch (err) {
+        console.log(err);
+      }
+    }
     dispatch(getStudentData());
+    fetchData();
   }, []);
 
   useEffect(() => {

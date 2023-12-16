@@ -88,7 +88,11 @@ const Navbar = ({ children }) => {
       <div id="sidebar" className={toggle ? "hide" : ""}>
         <Link href="/" className="logo">
           <div className="logoBox">
-            <img src={logo} alt="logo" />
+          <LuLayoutGrid
+              className="menuIcon" style={{width:"60px"}}
+              onClick={() => setToggle(!toggle)}
+            />
+           
             <LuLayoutGrid
               className="menuIconHidden"
               onClick={() => setToggle(!toggle)}
@@ -152,12 +156,13 @@ const Navbar = ({ children }) => {
       {/* Top Bar */}
       <div id="content">
         <nav>
+         
           <div>
-            <LuLayoutGrid
-              className="menuIcon"
-              onClick={() => setToggle(!toggle)}
-            />
-            {userType == "Student" ? (
+          <img src={logo} alt="logo" style={{width:"40px"}} />
+             <h2 style={{fontWeight:"bolder"}}>
+            Student LMS Portal
+          </h2>
+            {/* {userType == "Student" ? (
               premium == "false" ? (
                 <Link href="/" className="nav-link">
                   🔥 Access all features with premium ! <span>Buy now !</span>
@@ -169,7 +174,7 @@ const Navbar = ({ children }) => {
               <Link href="/" className="nav-link">
                 🔥 Welcome to LMS !
               </Link>
-            )}
+            )} */}
           </div>
           <div>
             {/* <Link href="/" className="notification">

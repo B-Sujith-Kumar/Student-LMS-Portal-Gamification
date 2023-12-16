@@ -48,6 +48,7 @@ const LeaderBoard = () => {
     if (!isAuthenticated) {
       return navigate("/");
     }
+    
   }, []);
 
   var count2;
@@ -75,6 +76,32 @@ const LeaderBoard = () => {
       setImg(badge3);
     }
   }
+  const cardStyle = {
+    border: '1px solid #ccc',
+    borderRadius: '8px',
+    padding: '26px',
+    width: '300px',
+    textAlign: 'center',
+    margin: '16px',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    width: "32%",
+  };
+
+  const imgStyle = {
+    borderRadius: '50%',
+    width: '180px',
+    height: '180px',
+    objectFit: 'cover',
+    marginBottom: '8px',
+  };
+
+  const badgeStyle = {
+    backgroundColor: '#4CAF50',
+    color: 'white',
+    padding: '10px 8px',
+    borderRadius: '4px',
+  };
+
 
   return (
     <Navbar>
@@ -89,8 +116,8 @@ const LeaderBoard = () => {
           className="tableAndBadgeContainer"
           style={{ display: "flex", flexWrap: "wrap" }}
         >
-          <div className="tableContainer" style={{ width: "50%" }}>
-            <table>
+          <div className="tableContainer" style={{ width: "68%" }}>
+            <table className="" style={{padding:"20px", paddingLeft:"40px"}}>
               <thead>
                 <tr>
                   <th>Name</th>
@@ -109,13 +136,14 @@ const LeaderBoard = () => {
               </tbody>
             </table>
           </div>
-          <div style={{ width: "50%" }}>
+          <hr style={{marginRight:"40px"}}></hr>
+          {/* <div style={{ width: "50%" }}>
             <center style={{ marginTop: "3%" }}>
               <button onClick={handleClick} className="viewBadgesButton">
                 {open ? "Close" : "View Badges"}
               </button>
             </center>
-            {/* <center> */}
+     
             {open && (
               <div style={{width: "100%", border:"1px solid black", marginTop:"15px", borderRadius:"8px"}}>
                 <img
@@ -130,10 +158,65 @@ const LeaderBoard = () => {
               </div>
             )}
             {open && img === badge1 ? "Bronze medal" : ""}
-            {/* </center> */}
+          
+          </div> */}
+          <div style={cardStyle}   >
+      <img
+        src="https://freesvg.org/img/abstract-user-flat-4.png"
+        alt="Profile"
+        style={imgStyle}
+      />
+      <h2 style={{ margin: '8px 0' }}>John Doe</h2>
+      <p style={{marginTop:"10px" ,marginBottom:"10px"}}>Image Score: 95</p>
+      {open && (
+      <div style={badgeStyle}>{open && img === badge1 ? "Bronze medal" : ""}</div>
+      )}
+      {/* <div style={{width: "100%", border:"1px solid black", marginTop:"15px", borderRadius:"8px" , backgroundColor:"lightblue"}}>
+                <img
+                  src={img}
+                  alt="Badge"
+                  style={{
+                    height: "120px",
+                    marginTop: "2%",
+                    marginLeft: "10px",
+                  }}
+                />
+              </div> */}
+              <div >
+            <center style={{ marginTop: "3%" }}>
+            {open && (
+              <button onClick={handleClick} className="viewBadgesButton" style={{backgroundColor:"white" ,color:"gray"}}>
+                {open ? "x" : "View Badges"}
+              </button>
+               )}
+                </center>
+               {!open && (
+              <button onClick={handleClick} className="viewBadgesButton">
+                {open ? "x" : "View Badges"}
+              </button>
+               )}
+           
+     
+            {open && (
+                 <div style={{width: "100%", border:"1px solid black", marginTop:"15px", borderRadius:"8px" , backgroundColor:"lightblue"}}>
+                <img
+                  src={img}
+                  alt="Badge"
+                  style={{
+                    height: "120px",
+                    marginTop: "2%",
+                    marginLeft: "10px",
+                  }}
+                />
+              </div> 
+            )}
+            
+          
           </div>
+    </div>
         </section>
       </div>
+     
     </Navbar>
   );
 };

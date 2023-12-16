@@ -100,6 +100,8 @@ const Login = () => {
     }
     if (formData.type === "student") {
       dispatch(studentLogin(formData)).then((res) => {
+        console.log(res.user._id);
+        localStorage.setItem('user', res.user._id);
         if (res.message === "Wrong credentials") {
           setLoading(false);
           messageApi.open({

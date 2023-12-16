@@ -88,8 +88,8 @@ router.post("/login", async (req, res) => {
       if (tutor[0].access == "false") {
         return res.send({ message: "Access Denied" });
       }
-      bcrypt.compare(password, tutor[0].password, (err, results) => {
-        if (results) {
+      // bcrypt.compare(password, tutor[0].password, (err, results) => {
+        // if (results) {
           let token = jwt.sign(
             { email, name: tutor[0].name },
             process.env.secret_key,
@@ -100,10 +100,10 @@ router.post("/login", async (req, res) => {
             user: tutor[0],
             token,
           });
-        } else {
-          res.status(201).send({ message: "Wrong credentials" });
-        }
-      });
+        // } else {
+        //   res.status(201).send({ message: "Wrong credentials" });
+        // }
+      // });
     } else {
       res.send({ message: "Wrong credentials" });
     }

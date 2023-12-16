@@ -4,7 +4,7 @@ const router = express.Router();
 //model import
 const { TutorModel } = require("../models/Tutor.model");
 const { AdminModel } = require("../models/admin.model");
-const { ContentModel } = require("../models/content.model");
+const { ContentModel } = require("../models/content.model"); 
 const { QuizModel } = require("../models/quiz.model");
 const { StudentModel } = require("../models/student.model");
 const { DoubtModel } = require("../models/doubt.model");

@@ -18,7 +18,9 @@ const quizRouter = require("./routes/Quiz.Route");
 const contentRouter = require("./routes/Content.Route");
 const DoubtRouter = require("./routes/Doubt.Route");
 const DashboardRouter = require("./routes/Dashboard.Route");
-
+const StudentModel =require("./models/student.model")
+// const { StudentModel } = require("../models/student.model");
+const {CourseSchema}=require("./models/course.model")
 app.use(express.text());
 app.use(express.json());
 app.use(cors());
@@ -26,6 +28,9 @@ app.use(cors());
 //routes
 app.get("/", (req, res) => {
   res.send("Home Route");
+});
+app.get("/courses", async(req, res) => {
+  res.send(await CourseSchema.find());
 });
 app.use("/admin", adminRouter);
 app.use("/tutor", tutorRouter);

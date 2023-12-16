@@ -19,7 +19,13 @@ router.get("/all", async (req, res) => {
     res.status(400).send({ message: "Something went wrong" });
   }
 });
-
+router.get("/studentsdata", async(req, res) => {
+  // console.log()
+  const students = await StudentModel.find();
+  res.send(students);
+  // return res.json(students);
+  // return res.json(await StudentModel.find());
+});
 // register new students
 router.post("/register", isAuthenticated, async (req, res) => {
   const { name, email, password } = req.body.data;

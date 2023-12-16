@@ -31,6 +31,9 @@ const studentSchema = mongoose.Schema(
       type: String,
       default: "false",
     },
+    course:{
+      type:Array
+    },
     totalPoints: { type: Number, default: 0 },
     totalQuiz: { type: Number, default: 0 },
     averageTime: { type: Number, default: 0 },

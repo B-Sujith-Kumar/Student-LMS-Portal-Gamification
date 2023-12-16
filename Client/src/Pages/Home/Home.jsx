@@ -67,7 +67,7 @@ const Home = () => {
     {
       icon: <AiOutlineTag />,
       title: "Contents",
-      number: dashboard?.contents?.length || 0,
+      number: 6,
     },
     {
       icon: <BsClipboardMinus />,
@@ -170,7 +170,7 @@ const Home = () => {
             </div>
             <div className="pieChart">
               <div className="chartHead">
-                <p>Occupancy</p>
+                <p>Attendance</p>
               </div>
               <div className="pieBox">
                 <ResponsiveContainer>
@@ -193,8 +193,8 @@ const Home = () => {
                   </PieChart>
                 </ResponsiveContainer>
                 <div className="pieData">
-                  <span>100</span>
-                  <p>Total Profit</p>
+                  <span>100%</span>
+                  <p>Attendance</p>
                 </div>
               </div>
             </div>

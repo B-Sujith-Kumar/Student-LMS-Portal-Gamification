@@ -65,12 +65,13 @@ const LeaderBoard = () => {
   }
 
   function handleClick() {
+    getBadges();
     setOpen(!open);
-    if (count <= 2) {
+    if (count > 0 && count <= 2) {
       setImg(badge1);
-    } else if (count <= 4) {
+    } else if (count > 0 && count <= 4) {
       setImg(badge2);
-    } else {
+    } else if (count > 0 && count <= 6) {
       setImg(badge3);
     }
   }
@@ -84,7 +85,10 @@ const LeaderBoard = () => {
 
       <div className="leaderboardData">
         {/* table */}
-        <section className="tableAndBadgeContainer" style={{display: "flex", flexWrap: "wrap"}}>
+        <section
+          className="tableAndBadgeContainer"
+          style={{ display: "flex", flexWrap: "wrap" }}
+        >
           <div className="tableContainer" style={{ width: "50%" }}>
             <table>
               <thead>
@@ -112,8 +116,20 @@ const LeaderBoard = () => {
               </button>
             </center>
             {/* <center> */}
-              {open && <img src={img} alt="Badge" style={{height: "100px", marginTop: "2%", marginLeft: "10px"}}/>}
-              {open && img === badge1 ? "Bronze medal": ""}
+            {open && (
+              <div style={{width: "100%", border:"1px solid black", marginTop:"15px", borderRadius:"8px"}}>
+                <img
+                  src={img}
+                  alt="Badge"
+                  style={{
+                    height: "100px",
+                    marginTop: "2%",
+                    marginLeft: "10px",
+                  }}
+                />
+              </div>
+            )}
+            {open && img === badge1 ? "Bronze medal" : ""}
             {/* </center> */}
           </div>
         </section>
